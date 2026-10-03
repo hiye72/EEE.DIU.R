@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)">
+<meta name="description" content="EEE 1-2 F Class Routine — Fall 2026, Daffodil International University">
+<title>1-2 F Routine · EEE Fall 2026</title>
+<style>
+:root{
+  --bg:#eef2f7;--text:#0f172a;--muted:#475569;--glass:rgba(255,255,255,.55);--glass-strong:rgba(255,255,255,.72);
+  --stroke:rgba(255,255,255,.75);--stroke-soft:rgba(15,23,42,.08);--shadow:0 10px 30px rgba(15,23,42,.10);
+  --accent:#0a84ff;--blob1:#9ec5ff;--blob2:#a7f3d0;--blob3:#f5c2e7;
+  --lab-bg:rgba(191,219,254,.55);--lab-edge:#3b82f6;--lab-text:#1e3a8a;
+  --th-bg:rgba(187,247,208,.55);--th-edge:#22c55e;--th-text:#14532d;
+  --radius:22px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0b0f17;--text:#f1f5f9;--muted:#a3b1c6;--glass:rgba(30,41,59,.45);--glass-strong:rgba(30,41,59,.68);
+    --stroke:rgba(255,255,255,.12);--stroke-soft:rgba(255,255,255,.08);--shadow:0 10px 30px rgba(0,0,0,.45);
+    --accent:#409cff;--blob1:#1d4ed8;--blob2:#047857;--blob3:#7e22ce;
+    --lab-bg:rgba(59,130,246,.18);--lab-edge:#60a5fa;--lab-text:#bfdbfe;
+    --th-bg:rgba(34,197,94,.16);--th-edge:#4ade80;--th-text:#bbf7d0;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg span{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;animation:float 22s ease-in-out infinite alternate}
+.bg span:nth-child(1){width:46vmax;height:46vmax;background:var(--blob1);top:-12vmax;left:-10vmax}
+.bg span:nth-child(2){width:40vmax;height:40vmax;background:var(--blob2);bottom:-14vmax;right:-8vmax;animation-delay:-7s}
+.bg span:nth-child(3){width:30vmax;height:30vmax;background:var(--blob3);top:35%;left:45%;animation-delay:-14s;opacity:.35}
+@keyframes float{to{transform:translate(6vmax,4vmax) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.bg span{animation:none}*{transition:none!important}}
+
+.glass{
+  background:var(--glass);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.35);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+}
+header{
+  position:sticky;top:0;z-index:50;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .3s ease;
+}
+header.hidden{transform:translateY(-115%);opacity:0;pointer-events:none}
+.bar{max-width:880px;margin:0 auto;border-radius:26px;padding:12px;display:flex;flex-direction:column;gap:12px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand h1{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.brand p{font-size:.74rem;color:var(--muted)}
+
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:999px;background:var(--stroke-soft);min-width:150px}
+.seg .pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--glass-strong);
+  border:1px solid var(--stroke);box-shadow:0 4px 14px rgba(0,0,0,.12);transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.seg[data-active="F2"] .pill{transform:translateX(100%)}
+.seg button{position:relative;z-index:1;border:0;background:none;color:var(--muted);font:inherit;font-weight:650;font-size:.92rem;padding:8px 18px;cursor:pointer;border-radius:999px;transition:color .2s}
+.seg button[aria-pressed="true"]{color:var(--text)}
+
+nav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity;padding:2px}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  flex:0 0 auto;scroll-snap-align:start;border:1px solid var(--stroke);background:var(--glass);color:var(--text);
+  font:inherit;font-size:.86rem;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:6px;
+  transition:background .2s,transform .15s,color .2s;
+}
+nav button:active{transform:scale(.96)}
+nav button .n{font-size:.7rem;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:inline-grid;place-items:center;background:var(--stroke-soft);color:var(--muted);padding:0 5px}
+nav button.active{background:var(--accent);color:#fff;border-color:transparent}
+nav button.active .n{background:rgba(255,255,255,.25);color:#fff}
+nav button.today:not(.active){border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main{max-width:880px;margin:0 auto;padding:12px 14px calc(40px + env(safe-area-inset-bottom))}
+.day{margin-bottom:26px;animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.day-head{display:flex;align-items:baseline;justify-content:space-between;margin:6px 6px 12px}
+.day-head h2{font-size:1.35rem;font-weight:750;letter-spacing:-.02em}
+.day-head span{font-size:.8rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+
+.card{position:relative;border-radius:var(--radius);padding:16px 16px 14px 18px;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--edge)}
+.card.lab{--edge:var(--lab-edge);background:linear-gradient(135deg,var(--lab-bg),var(--glass))}
+.card.theory{--edge:var(--th-edge);background:linear-gradient(135deg,var(--th-bg),var(--glass))}
+.card .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.time{font-size:.86rem;font-weight:700;font-variant-numeric:tabular-nums}
+.badge{font-size:.7rem;font-weight:750;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1px solid var(--edge)}
+.lab .badge{color:var(--lab-text)}
+.theory .badge{color:var(--th-text)}
+.course{font-size:1.06rem;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.code{font-size:.76rem;color:var(--muted);font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+.meta{margin-top:12px;display:grid;gap:6px}
+.meta div{display:flex;align-items:center;gap:8px;font-size:.88rem}
+.meta svg{width:16px;height:16px;flex:0 0 16px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.meta small{color:var(--muted);font-size:.78rem}
+.live{position:absolute;top:14px;right:14px}
+.card.now{outline:2px solid var(--edge);outline-offset:-2px}
+.card.now .badge::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--edge);margin-right:5px;vertical-align:middle;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.empty{border-radius:var(--radius);padding:22px;text-align:center;color:var(--muted);font-weight:600}
+.empty b{display:block;font-size:1.6rem;margin-bottom:4px}
+footer{text-align:center;color:var(--muted);font-size:.72rem;padding:4px 0 10px}
+.legend{display:inline-flex;gap:12px;margin-bottom:6px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
+@media (max-width:420px){.brand p{display:none}.seg button{padding:7px 14px}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header id="hdr">
+  <div class="bar glass">
+    <div class="top">
+      <div class="brand">
+        <h1>EEE 1-2 F</h1>
+        <p>Class Routine · Fall 2026</p>
+      </div>
+      <div class="seg" id="seg" data-active="F1" role="group" aria-label="Select section">
+        <div class="pill"></div>
+        <button type="button" data-sec="F1" aria-pressed="true">F1</button>
+        <button type="button" data-sec="F2" aria-pressed="false">F2</button>
+      </div>
+    </div>
+    <nav id="days" aria-label="Select day"></nav>
+  </div>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<footer>
+  <div class="legend"><span><i style="background:var(--th-edge)"></i>Theory</span><span><i style="background:var(--lab-edge)"></i>Lab</span></div>
+  <div>DIU · Dept. of EEE · Routine v4.0 · Effective Oct 03, 2026</div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  const TEACHERS = {
+    SS:  "Sarna Sarker",
+    MW:  "Md. Wahiduzzaman",
+    SRA: "Songita Rani Adhikary",
+    MSA: "Dr. M. Shamsul Alam",
+    MSH: "Md. Sanowar Hosen",
+    SHS: "Sayeed Hossain Sayor",
+    ShA: "Dr. Md. Shahin Azad"
+  };
+
+  const COURSES = {
+    "0541-121": "Mathematics II",
+    "0713-121": "Electrical Circuits II",
+    "0713-122": "Electrical Circuits II Lab",
+    "0531-111": "Chemistry",
+    "0531-122": "Chemistry Lab",
+    "0613-122": "Structured Programming Lab"
+  };
+
+  const DAYS = ["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"];
+
+  const DB = [
+    {"section":"F1","day":"Sunday","start":"09:30","end":"10:30","code":"0541-121","teacher":"SS","room":"103","type":"Theory"},
+    {"section":"F1","day":"Sunday","start":"10:30","end":"11:30","code":"0713-121","teacher":"MW","room":"103","type":"Theory"},
+    {"section":"F1","day":"Sunday","start":"13:00","end":"15:00","code":"0613-122","teacher":"SHS","room":"204","type":"Lab"},
+    {"section":"F1","day":"Sunday","start":"15:00","end":"16:00","code":"0531-111","teacher":"SRA","room":"403","type":"Theory"},
+    {"section":"F1","day":"Monday","start":"08:30","end":"10:30","code":"0531-122","teacher":"ShA","room":"Civil-A 303 (Chemistry Lab)","type":"Lab"},
+    {"section":"F1","day":"Monday","start":"10:30","end":"11:30","code":"0713-121","teacher":"MW","room":"405","type":"Theory"},
+    {"section":"F1","day":"Tuesday","start":"08:30","end":"10:30","code":"0713-121","teacher":"MSA","room":"103","type":"Theory"},
+    {"section":"F1","day":"Tuesday","start":"10:30","end":"11:30","code":"0541-121","teacher":"SS","room":"302","type":"Theory"},
+    {"section":"F1","day":"Tuesday","start":"11:30","end":"12:30","code":"0531-111","teacher":"SRA","room":"302","type":"Theory"},
+    {"section":"F1","day":"Wednesday","start":"11:30","end":"12:30","code":"0531-111","teacher":"SRA","room":"301","type":"Theory"},
+    {"section":"F1","day":"Wednesday","start":"13:00","end":"15:00","code":"0713-122","teacher":"MSH","room":"105","type":"Lab"},
+    {"section":"F1","day":"Wednesday","start":"15:00","end":"16:00","code":"0541-121","teacher":"SS","room":"301","type":"Theory"},
+
+    {"section":"F2","day":"Sunday","start":"09:30","end":"10:30","code":"0541-121","teacher":"SS","room":"103","type":"Theory"},
+    {"section":"F2","day":"Sunday","start":"10:30","end":"11:30","code":"0713-121","teacher":"MW","room":"103","type":"Theory"},
+    {"section":"F2","day":"Sunday","start":"13:00","end":"15:00","code":"0531-122","teacher":"ShA","room":"Civil-A 303 (Chemistry Lab)","type":"Lab"},
+    {"section":"F2","day":"Sunday","start":"15:00","end":"16:00","code":"0531-111","teacher":"SRA","room":"403","type":"Theory"},
+    {"section":"F2","day":"Monday","start":"08:30","end":"10:30","code":"0713-122","teacher":"MSH","room":"105","type":"Lab"},
+    {"section":"F2","day":"Monday","start":"10:30","end":"11:30","code":"0713-121","teacher":"MW","room":"405","type":"Theory"},
+    {"section":"F2","day":"Tuesday","start":"10:30","end":"11:30","code":"0541-121","teacher":"SS","room":"302","type":"Theory"},
+    {"section":"F2","day":"Tuesday","start":"11:30","end":"12:30","code":"0531-111","teacher":"SRA","room":"302","type":"Theory"},
+    {"section":"F2","day":"Wednesday","start":"08:30","end":"10:30","code":"0713-121","teacher":"MSA","room":"103","type":"Theory"},
+    {"section":"F2","day":"Wednesday","start":"11:30","end":"12:30","code":"0531-111","teacher":"SRA","room":"301","type":"Theory"},
+    {"section":"F2","day":"Wednesday","start":"13:00","end":"15:00","code":"0613-122","teacher":"SHS","room":"203","type":"Lab"},
+    {"section":"F2","day":"Wednesday","start":"15:00","end":"16:00","code":"0541-121","teacher":"SS","room":"301","type":"Theory"}
+  ];
+
+  const $ = s => document.querySelector(s);
+  const app = $("#app"), nav = $("#days"), seg = $("#seg"), hdr = $("#hdr");
+  const JS_DAY = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const TZ = "Asia/Dhaka";
+
+  const dhakaNow = () => {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:TZ,weekday:"long",hour:"2-digit",minute:"2-digit",hourCycle:"h23"})
+      .formatToParts(new Date()).map(x => [x.type, x.value]));
+    return { day: p.weekday, mins: (+p.hour) * 60 + (+p.minute) };
+  };
+  const toMin = t => { const [h,m] = t.split(":").map(Number); return h*60+m; };
+  const fmt = t => { let [h,m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return `${h}:${String(m).padStart(2,"0")} ${ap}`; };
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  const store = {
+    get(k, d){ try { return localStorage.getItem(k) ?? d; } catch { return d; } },
+    set(k, v){ try { localStorage.setItem(k, v); } catch {} }
+  };
+
+  const today = dhakaNow().day;
+  const state = {
+    section: ["F1","F2"].includes(store.get("r12f-sec")) ? store.get("r12f-sec") : "F1",
+    day: DAYS.includes(today) && DB.some(c => c.day === today) ? today : "All"
+  };
+
+  const classesFor = (sec, day) => DB.filter(c => c.section === sec && c.day === day).sort((a,b) => toMin(a.start) - toMin(b.start));
+
+  const ICON = {
+    user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',
+    room: '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'
+  };
+
+  function card(c, isNow){
+    const lab = c.type === "Lab";
+    const name = TEACHERS[c.teacher] || c.teacher;
+    return `<article class="card glass ${lab ? "lab" : "theory"}${isNow ? " now" : ""}">
+      <div class="row">
+        <span class="time">${fmt(c.start)} – ${fmt(c.end)}</span>
+        <span class="badge">${isNow ? "Now · " : ""}${c.type}</span>
+      </div>
+      <h3 class="course">${esc(COURSES[c.code] || c.code)}</h3>
+      <div class="code">${esc(c.code)}${c.section && lab ? ` · ${esc(c.section)}` : ""}</div>
+      <div class="meta">
+        <div>${ICON.user}<span>${esc(name)} <small>(${esc(c.teacher)})</small></span></div>
+        <div>${ICON.room}<span>Room ${esc(c.room)}</span></div>
+      </div>
+    </article>`;
+  }
+
+  function dayBlock(day){
+    const list = classesFor(state.section, day);
+    const n = dhakaNow();
+    const body = list.length
+      ? `<div class="grid">${list.map(c => card(c, n.day === day && n.mins >= toMin(c.start) && n.mins < toMin(c.end))).join("")}</div>`
+      : `<div class="empty glass"><b>☕</b>No classes</div>`;
+    return `<section class="day"><div class="day-head"><h2>${day}${day === today ? " · Today" : ""}</h2><span>${list.length} ${list.length === 1 ? "class" : "classes"}</span></div>${body}</section>`;
+  }
+
+  function renderNav(){
+    const total = DB.filter(c => c.section === state.section).length;
+    nav.innerHTML = ["All", ...DAYS].map(d => {
+      const cnt = d === "All" ? total : classesFor(state.section, d).length;
+      const label = d === "All" ? "All" : d.slice(0,3);
+      return `<button type="button" data-day="${d}" class="${d === state.day ? "active" : ""}${d === today ? " today" : ""}" aria-pressed="${d === state.day}" title="${d}">${label}<span class="n">${cnt}</span></button>`;
+    }).join("");
+    const a = nav.querySelector(".active");
+    if (a) a.scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"});
+  }
+
+  function render(){
+    seg.dataset.active = state.section;
+    seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.sec === state.section));
+    renderNav();
+    app.innerHTML = (state.day === "All" ? DAYS : [state.day]).map(dayBlock).join("");
+    document.title = `${state.section} · ${state.day} · EEE 1-2 F`;
+  }
+
+  seg.addEventListener("click", e => {
+    const b = e.target.closest("button[data-sec]");
+    if (!b || b.dataset.sec === state.section) return;
+    state.section = b.dataset.sec; store.set("r12f-sec", state.section); render();
+  });
+
+  nav.addEventListener("click", e => {
+    const b = e.target.closest("button[data-day]");
+    if (!b) return;
+    state.day = b.dataset.day; render();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  let lastY = window.scrollY, ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = Math.max(window.scrollY, 0), d = y - lastY;
+      if (y < 60 || d < -4) hdr.classList.remove("hidden");
+      else if (d > 4) hdr.classList.add("hidden");
+      lastY = y; ticking = false;
+    });
+  }, {passive:true});
+
+  setInterval(() => { if (!document.hidden) render(); }, 60000);
+  render();
+})();
+</script>
+</body>
+</html>
